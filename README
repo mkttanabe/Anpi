@@ -1,0 +1,15 @@
+Anpi について
+
+高齢者世帯安否確認システム
+
+mbed NXP LPC1768 ボードと各種センサで製作した装置がフロントエンドとして機能し
+Parse サーバ上に配置した自作の対向プログラムへデータを送出する
+
+mbed ボード用のプログラムは mbed.org 側のリポジトリで管理
+https://developer.mbed.org/users/mkttanabe/code/Anpi/
+
+詳細はブログにて
+http://dsas.blog.klab.org/
+
+Copyright (C) 2015 KLab Inc.
+
