@@ -54,8 +54,8 @@ Parse.Cloud.define("sendmail", function(request, response) {
     Mailgun.sendEmail({
             to: MAILGUN_TO, 
             from: MAILGUN_FROM,
-            subject: "** Notification **",
-            text: "緊急ボタンが押されました！至急安全確認を！ \r\n(" + now() +")"
+            subject: "** Notification (" + request.params.devid + ") **",
+            text: "[" + request.params.devid + "] のボタンが押されました \r\n(" + now() +")"
         },{
         success: function() {
             response.success("email sent");
@@ -66,7 +66,6 @@ Parse.Cloud.define("sendmail", function(request, response) {
     }); 
 });
 
-// send report
 Parse.Cloud.job("report", function(request, status) {
     var classDetected = Parse.Object.extend('Detected');
     var query = new Parse.Query(classDetected);
@@ -107,7 +106,7 @@ Parse.Cloud.job("report", function(request, status) {
 
 function toYYYYMMDD(date, sep) {
     var y = date.getFullYear();
-    var m = '0' + date.getMonth() + 1;
+    var m = '0' + (date.getMonth() + 1);
     var d = '0' + date.getDate();
     return y + sep + m.slice(-2) + sep + d.slice(-2);
 }
@@ -119,8 +118,12 @@ function toHHMNSS(date, sep) {
     return h.slice(-2) + sep + m.slice(-2) + sep + s.slice(-2);
 }
 
+function date() {
+    return new Date();
+}
+
 function dateTokyo() {
-    var d = new Date();
+    var d = date();
     d.setHours(d.getHours() + 9);
     return d;
 }
@@ -129,4 +132,3 @@ function now() {
     var now = dateTokyo();
     return toYYYYMMDD(now, '-') + ' ' + toHHMNSS(now, ':');
 }
-
